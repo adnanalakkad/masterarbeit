@@ -10,7 +10,6 @@ from tqdm import tqdm
 from scipy import signal
 from hyperparams import HParams as hp
 
-
 def spectrogram2wav(mag):
     '''# Generate wave file from linear magnitude spectrogram
     Args:
@@ -38,13 +37,12 @@ def spectrogram2wav(mag):
 
     return wav.astype(np.float32)
 
-
 def griffin_lim(spectrogram):
     '''Applies Griffin-Lim's raw.'''
     X_best = copy.deepcopy(spectrogram)
     for i in range(hp.n_iter):
         X_t = invert_spectrogram(X_best)
-        est = librosa.stft(X_t, hp.n_fft, hp.hop_length, win_length=hp.win_length)
+        est = librosa.stft(X_t, n_fft=hp.n_fft,hop_length= hp.hop_length, win_length=hp.win_length)
         phase = est / np.maximum(1e-8, np.abs(est))
         X_best = spectrogram * phase
     X_t = invert_spectrogram(X_best)
@@ -52,14 +50,12 @@ def griffin_lim(spectrogram):
 
     return y
 
-
 def invert_spectrogram(spectrogram):
     '''Applies inverse fft.
     Args:
       spectrogram: [1+n_fft//2, t]
     '''
-    return librosa.istft(spectrogram, hp.hop_length, win_length=hp.win_length, window="hann")
-
+    return librosa.istft(spectrogram, hop_length=hp.hop_length, win_length=hp.win_length, window="hann")
 
 def get_spectrograms(fpath):
     '''Parse the wave file in `fpath` and
@@ -106,12 +102,10 @@ def get_spectrograms(fpath):
 
     return mel, mag
 
-
 def save_to_wav(mag, filename):
     """Generate and save an audio file from the given linear spectrogram using Griffin-Lim."""
     wav = spectrogram2wav(mag)
     scipy.io.wavfile.write(filename, hp.sr, wav)
-
 
 def preprocess(dataset_path, speech_dataset):
     """Preprocess the given dataset."""

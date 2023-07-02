@@ -1,0 +1,17 @@
+tensorflow==1.15
+numpy==1.20
+torch==1.7.1
+unidecode
+librosa==0.10.0
+numpy==1.20
+tqdm
+scikit-image==0.12.2
+inflect
+docopt
+protobuf==3.20.0
+urllib3==1.26.7
+cffi==1.5.2
+scikit-learn==0.26.0
+Pillow==5.4
+nltk===3.4.5
+ 

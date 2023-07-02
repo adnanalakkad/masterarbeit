@@ -56,8 +56,6 @@ elif args.dataset == 'emovdb':
         "I wrote this sentence myself to test whether it works."
     ]
 
-
-
 else:
     from datasets.mb_speech import vocab, get_test_data
 
@@ -120,7 +118,7 @@ for i in range(len(SENTENCES)):
     A = A.cpu().detach().numpy()
     Z = Z.cpu().detach().numpy()
 
-    save_to_png('samples/samples_bea_sleepiness_3k/%d-att.png' % (i + 1), A[0, :, :])
-    save_to_png('samples/samples_bea_sleepiness_3k/%d-mel.png' % (i + 1), Y[0, :, :])
-    save_to_png('samples/samples_bea_sleepiness_3k/%d-mag.png' % (i + 1), Z[0, :, :])
+    #save_to_png('samples/samples_bea_sleepiness_3k/%d-att.png' % (i + 1), A[0, :, :])
+    #save_to_png('samples/samples_bea_sleepiness_3k/%d-mel.png' % (i + 1), Y[0, :, :])
+    #save_to_png('samples/samples_bea_sleepiness_3k/%d-mag.png' % (i + 1), Z[0, :, :])
     save_to_wav(Z[0, :, :].T, 'samples/samples_bea_sleepiness_3k/%d-wav.wav' % (i + 1))

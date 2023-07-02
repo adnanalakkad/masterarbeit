@@ -8,9 +8,7 @@ import torch
 import math
 import requests
 from tqdm import tqdm
-from skimage.io import imsave
-
-
+ 
 def get_last_checkpoint_file_name(logdir):
     """Returns the last checkpoint file name in the given log dir path."""
     print('Checking latest checkpoints')
@@ -22,11 +20,10 @@ def get_last_checkpoint_file_name(logdir):
         return None
     return checkpoints[-1]
 
-
 def load_checkpoint_test(checkpoint_file_name, model, optimizer):
     """Loads the checkpoint into the given model and optimizer."""
     print(checkpoint_file_name)
-    checkpoint = torch.load(checkpoint_file_name)
+    checkpoint = torch.load(checkpoint_file_name , map_location=torch.device('cpu')  )
     model.load_state_dict(checkpoint['state_dict'])
     model.float()
     if optimizer is not None:
@@ -40,6 +37,9 @@ def load_checkpoint_test(checkpoint_file_name, model, optimizer):
 def load_checkpoint(checkpoint_file_name, model, optimizer):
     """Loads the checkpoint into the given model and optimizer."""
     print(checkpoint_file_name)
+
+    absolute_path = os.path.abspath(checkpoint_file_name)
+
     checkpoint = torch.load(checkpoint_file_name)
     model.load_state_dict(checkpoint.state_dict())
     model.float()
@@ -50,8 +50,6 @@ def load_checkpoint(checkpoint_file_name, model, optimizer):
     del checkpoint
     print("loaded checkpoint epoch=%d step=%d" % (start_epoch, global_step))
     return start_epoch, global_step
-
-
 
 def save_checkpoint(logdir, epoch, global_step, model, optimizer):
     """Saves the training state into the given log dir path."""
@@ -65,7 +63,6 @@ def save_checkpoint(logdir, epoch, global_step, model, optimizer):
     }
     torch.save(checkpoint, checkpoint_file_name)
     del checkpoint
-
 
 def download_file(url, file_path):
     """Downloads a file from the given URL."""
@@ -83,9 +80,8 @@ def download_file(url, file_path):
         print("downloading failed")
         sys.exit(1)
 
-
 def save_to_png(file_name, array):
     """Save the given numpy array as a PNG file."""
     # from skimage._shared._warnings import expected_warnings
     # with expected_warnings(['precision']):
-    imsave(file_name, array)
+    #   imsave(file_name, array)

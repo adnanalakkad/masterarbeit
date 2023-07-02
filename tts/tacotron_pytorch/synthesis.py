@@ -33,7 +33,6 @@ from tqdm import tqdm
 
 use_cuda = torch.cuda.is_available()
 
-
 def tts(model, text):
     """Convert text to speech waveform given a Tacotron model.
     """
@@ -46,7 +45,7 @@ def tts(model, text):
     model.postnet.eval()
 
     sequence = np.array(text_to_sequence(text, [hparams.cleaners]))
-    sequence = Variable(torch.from_numpy(sequence)).unsqueeze(0)
+    sequence = Variable(torch.from_numpy(sequence).long()).unsqueeze(0)
     if use_cuda:
         sequence = sequence.cuda()
 
@@ -61,7 +60,6 @@ def tts(model, text):
     waveform = audio.inv_spectrogram(linear_output.T)
 
     return waveform, alignment, spectrogram
-
 
 if __name__ == "__main__":
     args = docopt(__doc__)

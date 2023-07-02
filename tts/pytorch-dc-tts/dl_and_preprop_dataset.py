@@ -127,7 +127,7 @@ elif args.dataset == 'mbspeech':
                 assert mp3_file is not None
                 samples, sr = librosa.load(mp3_file, sr=sample_rate, mono=True)
                 assert sr == sample_rate
-
+                librosa.tofi
                 for index, row in df.iterrows():
                     start, end, sentence = row['start'], row['end'], row['sentence']
                     assert end > start

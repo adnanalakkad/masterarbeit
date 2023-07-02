@@ -8,7 +8,7 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/test.py",
+            "program": "${workspaceFolder}/tacotron_pytorch/test.py",
             "console": "integratedTerminal",
             "justMyCode": true
         }
